@@ -16,6 +16,7 @@ export const useIconsStore = defineStore('icons', () => {
       translation: 0
     },
     fontSize: 180,
+    text: '',
     fontAwesomeIcon: {
       id: 'gear',
       family: 'classic',

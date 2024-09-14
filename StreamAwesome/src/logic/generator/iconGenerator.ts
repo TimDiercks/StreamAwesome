@@ -59,11 +59,16 @@ export default abstract class IconGenerator<T extends FontAwesomePreset> {
 
   protected drawIcon(icon: CustomIcon<T>): void {
     const centerOfCanvas = this.canvas.width / 2
+    const isTextInUse = icon.text !== ''
+    let verticalPlacement = centerOfCanvas
+    if (isTextInUse) {
+      verticalPlacement -= this.canvas.height / 10
+    }
     const iconCode = this.calculateIcon(icon.fontAwesomeIcon.unicode)
     const fontWeight = FontAwesomeIconType.getFontWeightOfStyle(icon.fontAwesomeIcon.style)
     const fontFamilySuffix = FontAwesomeIconType.getFontFamilySuffix(icon.fontAwesomeIcon)
 
-    this.setupFont(icon.fontAwesomeIcon.unicode, icon.fontSize, fontWeight, fontFamilySuffix)
+    this.setupFontAwesome(icon.fontAwesomeIcon.unicode, icon.fontSize, fontWeight, fontFamilySuffix)
 
     if (
       icon.fontAwesomeIcon.family.includes(DuotoneKeyword) &&
@@ -72,16 +77,33 @@ export default abstract class IconGenerator<T extends FontAwesomePreset> {
       this.renderingContext.fillStyle = this.getSecondaryFillStyle(icon)
 
       const secondaryIconCode = this.calculateSecondaryIcon(icon.fontAwesomeIcon.unicode)
-      this.renderingContext.fillText(secondaryIconCode, centerOfCanvas, centerOfCanvas)
+      this.renderingContext.fillText(secondaryIconCode, centerOfCanvas, verticalPlacement)
     }
 
     this.renderingContext.fillStyle = this.getIconFillStyle(icon)
-    this.renderingContext.fillText(iconCode, centerOfCanvas, centerOfCanvas)
+    this.renderingContext.fillText(iconCode, centerOfCanvas, verticalPlacement)
+  }
+
+  protected drawText(icon: CustomIcon<T>): void {
+    const isTextInUse = icon.text !== ''
+    if (!isTextInUse) {
+      return
+    }
+    const centerOfCanvas = this.canvas.width / 2
+    this.setupFont(icon)
+    console.log(this.renderingContext.font)
+    this.renderingContext.fillText(
+      icon.text,
+      centerOfCanvas,
+      centerOfCanvas + icon.fontSize / 2 + 10,
+      this.canvas.width - 50
+    )
   }
 
   generateIcon(icon: CustomIcon<T>) {
     this.drawBackground(icon)
     this.drawIcon(icon)
+    this.drawText(icon)
   }
 
   saveIcon(icon: CustomIcon<T>) {
@@ -111,7 +133,20 @@ export default abstract class IconGenerator<T extends FontAwesomePreset> {
     return `${iconName}-${customPresetName}-${fontAwesomeFamily}-${fontAwesomeStyle}`
   }
 
-  private setupFont(
+  // TODO: this should become a clever function to determine the perfect font size
+  // such that the text fits into the icon and is not to "high"
+  private calculateFontSize(text: string): number {
+    text
+    return 32
+  }
+
+  private setupFont(icon: CustomIcon<T>): void {
+    this.renderingContext.textBaseline = 'middle'
+    this.renderingContext.textAlign = 'center'
+    this.renderingContext.font = `400 ${this.calculateFontSize(icon.text)}px "system-ui"`
+  }
+
+  private setupFontAwesome(
     iconUnicode: string,
     fontSize: number,
     fontWeight: FontWeight,

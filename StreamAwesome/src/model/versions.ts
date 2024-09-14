@@ -8,7 +8,7 @@ export const fontAwesomeVersionInfo: {
 } = {
   fontFamilyBase: 'Font Awesome 6',
   fontVersion: '6.6.0',
-  fontLicense: 'Pro'
+  fontLicense: 'Free'
 }
 
 export function setFontAwesomeLicense(fontLicense: fontLicense) {

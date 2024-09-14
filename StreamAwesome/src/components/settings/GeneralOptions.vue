@@ -68,6 +68,11 @@ function createFontAwesomeIconDisplayFromFamily(family: FontAwesomeFamily): Font
   }
 }
 
+function updateText(event: Event) {
+  const text = (event.target as HTMLInputElement).value
+  currentIcon.text = text
+}
+
 function updateSize(event: Event) {
   const size = +(event.target as HTMLInputElement).value
   currentIcon.fontSize = size
@@ -83,6 +88,22 @@ function updateStyle(style: FontAwesomeStyle) {
 </script>
 
 <template>
+  <div class="mt-5">
+    <label for="iconSize" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+      >Text:
+    </label>
+    <input
+      type="text"
+      :value="props.icon?.text ?? ''"
+      tabindex="1"
+      @input="(event) => updateText(event)"
+      class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+    />
+    <!-- Add positioning (TOP/ BOTTOM) -->
+    <!-- Add font size -->
+    <!-- Add font family -->
+  </div>
+
   <div class="mt-5">
     <label for="iconSize" class="mb-[0.5] block text-sm font-medium text-gray-900 dark:text-white"
       >Icon Size and Style:

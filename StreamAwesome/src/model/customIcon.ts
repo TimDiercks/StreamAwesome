@@ -7,6 +7,7 @@ export const ColorSpaceKeys = ['rgb', 'hsl', 'lab', 'lch', 'lrgb'] as const
 export type ColorSpace = (typeof ColorSpaceKeys)[number]
 
 export interface CustomIcon<T extends FontAwesomePreset> {
+  text: string
   fontSize: number
   fontAwesomeIcon: FontAwesomeIcon
   presetSettings: (ClassicPreset | ModernPreset | NeoPreset | CustomPreset) & {

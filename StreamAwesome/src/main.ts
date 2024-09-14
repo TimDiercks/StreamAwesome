@@ -33,10 +33,10 @@ async function loadFontAwesomeStyles() {
   import('../fonts/fontawesome/css/brands.min.css')
 
   if (fontAwesomeVersionInfo.fontLicense === 'Pro') {
-    import('../fonts/fontawesome/css/sharp-light.min.css')
-    import('../fonts/fontawesome/css/sharp-thin.min.css')
-    import('../fonts/fontawesome/css/sharp-regular.min.css')
-    import('../fonts/fontawesome/css/sharp-solid.min.css')
-    import('../fonts/fontawesome/css/sharp-duotone-solid.min.css')
+    // import('../fonts/fontawesome/css/sharp-light.min.css')
+    // import('../fonts/fontawesome/css/sharp-thin.min.css')
+    // import('../fonts/fontawesome/css/sharp-regular.min.css')
+    // import('../fonts/fontawesome/css/sharp-solid.min.css')
+    // import('../fonts/fontawesome/css/sharp-duotone-solid.min.css')
   }
 }
